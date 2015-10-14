@@ -1,6 +1,6 @@
 var chai = require("chai");
 var expect = chai.expect;
-var NoteService = require("../services/noteservice");
+var NoteService = require("../src/services/noteservice");
 
 chai.should(); // gives all objects access to the 'should' object
 

@@ -15,7 +15,7 @@ var config = {
   port: 9005,
   baseDevUrl: 'http://localhost',
   paths: {
-    css: './src/style.css',
+    css: ['./src/style.css'],
     js: './src/**/*.js',
     test: './test/*.js',
     html: './src/*.html',
@@ -62,7 +62,7 @@ gulp.task('js', function(){
 });
 
 gulp.task('css', function(){
-  gulp.src([config.paths.css]).pipe(concat('bundle.css')).pipe(gulp.dest(config.paths.dist + '/css'));
+  gulp.src(config.paths.css).pipe(concat('bundle.css')).pipe(gulp.dest(config.paths.dist + '/css'));
 });
 
 gulp.task('watch', function(){
@@ -70,7 +70,7 @@ gulp.task('watch', function(){
   gulp.watch([config.paths.js, config.paths.test], ['mocha']); // setup a file watcher, which will run the 'mocha' task as files change
   gulp.watch([config.paths.html], ['html']);
   gulp.watch([config.paths.js], ['js','lint']);
-  gulp.watch([config.paths.css], ['css']);
+  gulp.watch(config.paths.css, ['css']);
 });
 
 gulp.task('lint', function(){

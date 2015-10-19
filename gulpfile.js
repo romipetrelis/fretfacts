@@ -9,19 +9,31 @@ var gulp = require('gulp'),
   reactify = require('reactify'), // transform JSX to JS
   source = require('vinyl-source-stream'), // use conventional text streams with Gulp
   lint = require('gulp-eslint'),
-  concat = require('gulp-concat');
+  concat = require('gulp-concat'),
+  neat = require('node-neat'),
+  sass = require('gulp-sass');
 
 var config = {
   port: 9005,
   baseDevUrl: 'http://localhost',
   paths: {
-    css: ['./src/style.css'],
+    //css: ['./src/style.css'],
     js: './src/**/*.js',
     test: './test/*.js',
     html: './src/*.html',
     images: '.src/images/*',
     dist: './dist',
-    mainJs: './src/main.js'}};
+    mainJs: './src/main.js',
+    sass: {
+      src: './src/styles/sass/**/*.{sass,scss}',
+      settings: {
+        includePaths: neat.includePaths
+        //,style: 'compressed',
+        //quiet: true
+      }
+    }
+  }
+};
 
 gulp.task('connect', function(){
   connect.server({
@@ -61,8 +73,14 @@ gulp.task('js', function(){
     .pipe(connect.reload());
 });
 
-gulp.task('css', function(){
-  gulp.src(config.paths.css).pipe(concat('bundle.css')).pipe(gulp.dest(config.paths.dist + '/css'));
+// gulp.task('css', function(){
+//   gulp.src(config.paths.css).pipe(concat('bundle.css')).pipe(gulp.dest(config.paths.dist + '/css'));
+// });
+
+gulp.task('sass', function(){
+  return gulp.src(config.paths.sass.src)
+    .pipe(sass(config.paths.sass.settings))
+    .pipe(gulp.dest(config.paths.dist + '/css'))
 });
 
 gulp.task('watch', function(){
@@ -70,7 +88,8 @@ gulp.task('watch', function(){
   gulp.watch([config.paths.js, config.paths.test], ['mocha']); // setup a file watcher, which will run the 'mocha' task as files change
   gulp.watch([config.paths.html], ['html']);
   gulp.watch([config.paths.js], ['js','lint']);
-  gulp.watch(config.paths.css, ['css']);
+  // gulp.watch(config.paths.css, ['css']);
+  gulp.watch([config.paths.sass.src], ['sass']);
 });
 
 gulp.task('lint', function(){
@@ -79,4 +98,4 @@ gulp.task('lint', function(){
   .pipe(lint.format());
 });
 
-gulp.task('default', ['watch', 'html', 'js', 'css', 'lint', 'open']); // set the default task(s)
+gulp.task('default', ['watch', 'html', 'js', 'sass', 'lint', 'open']); // set the default task(s)

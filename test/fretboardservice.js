@@ -1,8 +1,8 @@
 var chai = require("chai");
 var expect = chai.expect;
 //var sinon = require("sinon");
-var FretboardService = require("../src/services/fretboardservice");
-var NoteService = require("../src/services/noteservice");
+var FretboardService = require("../src/services/fretboardService");
+var NoteService = require("../src/services/noteService");
 
 chai.should(); // gives all objects access to the 'should' object
 

@@ -11,6 +11,8 @@ var FretboardService = function(noteService) {
     var pitchClasses = noteService.availablePitchClasses;
     var pitchClassCount = pitchClasses.length;
     var strings = [];
+    var noteId = 0;
+    var stringId = 0;
     tuning.forEach(function(openString) {
       var parsedNote = noteService.parseNote(openString); // Ex: { pitchClassName: 'E', octave: 2 }
       var octave = parsedNote.octave;
@@ -24,12 +26,18 @@ var FretboardService = function(noteService) {
         }
         var pc = pitchClasses[pci];
         var freq = noteService.getFrequency(pc.name + octave);
-        var note = { pitchClass: pc, octave: parseInt(octave), freq: freq };
+        var note = { id: "note_" + noteId, pitchClass: pc, octave: parseInt(octave), freq: freq };
         notesOnThisString.push(note);
         pci++;
         i++;
+        noteId++;
       }
-      strings.push(notesOnThisString);
+      strings.push({
+        id: "string_" + stringId,
+        name: openString,
+        notes: notesOnThisString
+      });
+      stringId++;
     });
     return strings;
   }

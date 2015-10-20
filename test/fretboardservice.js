@@ -26,7 +26,7 @@ describe("FretboardService", function(){
       strings.length.should.equal(6);
       var i=0;
       while(i<6) {
-        expect(strings[i].length).to.equal(13);
+        expect(strings[i].notes.length).to.equal(13);
         i++;
       }
     });
@@ -35,18 +35,18 @@ describe("FretboardService", function(){
       var sut = new FretboardService(new NoteService());
       var strings = sut.getStrings();
 
-      expect(strings[0][0].pitchClass.name).to.equal('E');
-      expect(strings[0][0].octave).to.equal(2);
-      expect(strings[1][0].pitchClass.name).to.equal('A');
-      expect(strings[1][0].octave).to.equal(2);
-      expect(strings[2][0].pitchClass.name).to.equal('D');
-      expect(strings[2][0].octave).to.equal(3);
-      expect(strings[3][0].pitchClass.name).to.equal('G');
-      expect(strings[3][0].octave).to.equal(3);
-      expect(strings[4][0].pitchClass.name).to.equal('B');
-      expect(strings[4][0].octave).to.equal(3);
-      expect(strings[5][0].pitchClass.name).to.equal('E');
-      expect(strings[5][0].octave).to.equal(4);
+      expect(strings[0].notes[0].pitchClass.name).to.equal('E');
+      expect(strings[0].notes[0].octave).to.equal(2);
+      expect(strings[1].notes[0].pitchClass.name).to.equal('A');
+      expect(strings[1].notes[0].octave).to.equal(2);
+      expect(strings[2].notes[0].pitchClass.name).to.equal('D');
+      expect(strings[2].notes[0].octave).to.equal(3);
+      expect(strings[3].notes[0].pitchClass.name).to.equal('G');
+      expect(strings[3].notes[0].octave).to.equal(3);
+      expect(strings[4].notes[0].pitchClass.name).to.equal('B');
+      expect(strings[4].notes[0].octave).to.equal(3);
+      expect(strings[5].notes[0].pitchClass.name).to.equal('E');
+      expect(strings[5].notes[0].octave).to.equal(4);
 
     });
 
@@ -56,7 +56,7 @@ describe("FretboardService", function(){
       strings.length.should.equal(6);
       var i=0;
       while(i<6) {
-        expect(strings[i].length).to.equal(6);
+        expect(strings[i].notes.length).to.equal(6);
         i++;
       }
     });

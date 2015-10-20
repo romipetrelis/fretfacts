@@ -2,12 +2,25 @@ var React = require('react');
 
 var TuningList = React.createClass({
   propTypes: {
-    tunings: React.PropTypes.array.isRequired
+    tunings: React.PropTypes.array.isRequired,
+    onSelectionChanged: React.PropTypes.func
+  },
+  getInitialState: function(){
+    return {selectedValue: this.props.initialValue};
+  },
+  handleChange: function(event) {
+    var newValue = event.target.value;
+    this.setState({selectedValue: newValue});
+
+    if (typeof this.props.onSelectionChanged == 'function'){
+      this.props.onSelectionChanged(newValue);
+    }
   },
   render: function(){
     var createTuningOption = function(tuningOption) {
+      var value = tuningOption.tuning.join(",");
       return (
-        <option key={tuningOption.id} value={tuningOption.tuning}>{tuningOption.name}</option>
+        <option key={tuningOption.id} value={value}>{tuningOption.name}</option>
       );
     };
     var createTuningOptionGroup = function(tuningGroup) {
@@ -19,9 +32,14 @@ var TuningList = React.createClass({
     };
 
     return (
-      <select>
-        {this.props.tunings.map(createTuningOptionGroup, this)}
-      </select>
+      <div>
+        <p>initiaValue: {this.props.initialValue}</p>
+
+        <select value={this.state.selectedValue} onChange={this.handleChange}>
+          <option key="none" value="">Pick a tuning</option>
+          {this.props.tunings.map(createTuningOptionGroup, this)}
+        </select>
+      </div>
     );
   }
 });

@@ -14,17 +14,19 @@ var InstrumentPage = React.createClass({
       initialTuning: ""
     };
   },
-  componentDidMount: function(){
-    if (this.isMounted()){
-      var tuningSvc = new TuningService();
-      var tunings = tuningSvc.getAvailableTunings();
-      var initialTuning = tunings[0].options[0].tuning.join(",");
+  componentWillMount: function(){
+    //TODO: is it acceptable to do this from within componentWillMount?
+    // if we do it in componentDidMount, then initialValue is not available in tuningList until render()
+    var tuningSvc = new TuningService();
+    var tunings = tuningSvc.getAvailableTunings();
+    var initialTuning = tunings[0].options[0].tuning.join(",");
 
-      this.setState({
-        tunings: tunings,
-        initialTuning: initialTuning
-      });
-    }
+    this.setState({
+      tunings: tunings,
+      initialTuning: initialTuning
+    });
+
+    this.handleTuningSelectionChanged(initialTuning);
   },
   handleTuningSelectionChanged: function(newValue) {
     if (newValue.length == 0){

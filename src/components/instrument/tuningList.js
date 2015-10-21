@@ -6,7 +6,9 @@ var TuningList = React.createClass({
     onSelectionChanged: React.PropTypes.func
   },
   getInitialState: function(){
-    return {selectedValue: this.props.initialValue};
+    return {
+      selectedValue: this.props.initialValue
+    }
   },
   handleChange: function(event) {
     var newValue = event.target.value;
@@ -33,10 +35,7 @@ var TuningList = React.createClass({
 
     return (
       <div>
-        <p>initiaValue: {this.props.initialValue}</p>
-
         <select value={this.state.selectedValue} onChange={this.handleChange}>
-          <option key="none" value="">Pick a tuning</option>
           {this.props.tunings.map(createTuningOptionGroup, this)}
         </select>
       </div>

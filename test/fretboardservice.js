@@ -69,4 +69,15 @@ describe("FretboardService", function(){
     //
     // });
   });
+  describe("getFrets", function(){
+    it("should return 13 frets, with 6 strings each, when tuning and fret count are not specified", function(){
+      var sut = new FretboardService(new NoteService());
+      var frets = sut.getFrets();
+      frets.length.should.equal(13);
+      frets.forEach(function(fret){
+        fret.strings.length.should.equal(6);
+      });
+    });
+    
+  });
 });

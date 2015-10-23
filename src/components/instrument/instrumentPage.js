@@ -2,6 +2,7 @@
 var React = require('react');
 var TuningList = require('./tuningList');
 var FrettedInstrument = require('./frettedInstrument');
+var Fretboard = require("./fretboard");
 var TuningService = require('../../services/tuningService');
 var FretboardService = require("../../services/fretboardService");
 var NoteService = require("../../services/noteService");
@@ -10,7 +11,7 @@ var InstrumentPage = React.createClass({
   getInitialState: function(){
     return {
       tunings: [],
-      strings: [],
+      frets: [],
       initialTuning: ""
     };
   },
@@ -30,14 +31,14 @@ var InstrumentPage = React.createClass({
   },
   handleTuningSelectionChanged: function(newValue) {
     if (newValue.length == 0){
-      this.setState({strings: []});
+      this.setState({frets: []});
       return;
     }
     var tuning = newValue.split(",");
     var fretboardSvc = new FretboardService(new NoteService());
-    var strings = fretboardSvc.getStrings(tuning);
+    var frets = fretboardSvc.getFrets(tuning);
     this.setState({
-      strings: strings
+      frets: frets
     });
   },
   render: function(){
@@ -45,7 +46,7 @@ var InstrumentPage = React.createClass({
       <div>
         <h1>Fretted Instrument</h1>
         <TuningList tunings={this.state.tunings} initialValue={this.state.initialTuning} onSelectionChanged={this.handleTuningSelectionChanged} />
-        <FrettedInstrument strings={this.state.strings} />
+        <Fretboard frets={this.state.frets} />
       </div>
     );
   }

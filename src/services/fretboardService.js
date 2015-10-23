@@ -53,7 +53,8 @@ var FretboardService = function(noteService) {
       return elem.notes.map(mapNote);
     };
     var concatStrings = function(prev, curr) { return prev.concat(curr);};
-    var descStringSorter = function(a, b) { return b.stringNumber - a.stringNumber;};
+    //var descStringSorter = function(a, b) { return b.stringNumber - a.stringNumber;};
+    var ascStringSorter = function(a, b) { return a.stringNumber - b.stringNumber;};
     var ascFretSorter = function(a,b){ return a.fretNumber - b.fretNumber;};
     var groupByFret = function(prev, curr, index, array){
       var target;
@@ -91,7 +92,7 @@ var FretboardService = function(noteService) {
     };
 
     var strings = getStrings(tuning, fretCount);
-    return strings.map(mapString).reduce(concatStrings).sort(descStringSorter).sort(ascFretSorter).reduce(groupByFret).frets;
+    return strings.map(mapString).reduce(concatStrings).sort(ascStringSorter).sort(ascFretSorter).reduce(groupByFret).frets;
   };
 
   // API

@@ -78,6 +78,6 @@ describe("FretboardService", function(){
         fret.strings.length.should.equal(6);
       });
     });
-    
+
   });
 });
